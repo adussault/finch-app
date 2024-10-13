@@ -1,0 +1,67 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<h3>Employee Directory</h3>
+
+<table id="company_directory" class="table">
+		{% for individual in data["individuals"] %}
+			<tr valign="center" id="{{ individual.id[:10] }}" class="individual" >
+				<td >
+					<div class='toggle-able' onclick="toggleDisplay('{{ individual.id[:10] }}-details')" >{{ individual.first_name }} {{ individual.last_name }}
+					</div>
+				</td>
+			</tr>
+			<tr valign="top" id="{{ individual.id[:10] }}-details" style="display: none;" class="individual-details">
+				<td>
+					<table>
+					{% for detail in individual.keys() %}
+						{% if detail == 'manager' %}
+						<tr>
+							<td>Manager: </td>
+							{% if individual[detail].id == None %}
+							<td>None</td>
+							{% else %}
+								{% set manager = data["individuals"] | selectattr("id", "equalto", individual[detail].id) | list %}
+								{% if manager != [] %}
+									<td><a href="#{{ manager[0].id[:10]}}">{{ manager[0].first_name }} {{ manager[0].last_name }}</a></td>
+								{% else %}
+									<td>Manager not found. Finch individual id is {{ individual[detail].id }}</td>
+								{% endif %}
+							{% endif %}
+
+						</tr>
+
+						{% elif detail == 'department' %}
+						<tr>
+							<td>{{ detail }} : </td>
+							<td>{{ individual[detail].name }}</td>
+						</tr>
+						{% else %}
+							<tr>
+								<td>{{ detail }}: </td>
+								<td>{{ individual[detail] }}</td>
+							</tr>
+
+						{% endif %}
+					{% endfor %}
+					<tr>
+						<td>
+							<a href="{{ url_for('employment')}}#{{ individual.id[:10] }}">Employment Info</a>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+
+		{% endfor %}
+	
+
+</table>
+
+<script type="text/javascript">
+	function toggleDisplay(elementID) {
+		var element = document.getElementById(elementID);
+		element.style.display = element.style.display === 'none' ? '' : 'none';
+}
+</script>
+{% endblock %}

@@ -1,0 +1,8 @@
+.toggle-able {
+	display: block;
+    cursor: pointer;
+}
+
+.individual {
+	background-color: grey;
+}

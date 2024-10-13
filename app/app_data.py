@@ -1,0 +1,33 @@
+providers = {
+"adp_run": "ADP Run",
+"bamboo_hr": "Bamboo HR",
+"bamboo_hr_api": "Bamboo HR (API)",
+"bob": "HiBob",
+"gusto": "Gusto",
+"humaans": "Humaans",
+"insperity": "Insperity",
+"justworks": "Justworks",
+"namely": "Namely",
+"paychex_flex": "Paychex Flex",
+"paychex_flex_api": "Paychex Flex (API)",
+"paycom": "Paycom",
+"paycom_api": "Paycom (API)",
+"paylocity": "Paylocity",
+"paylocity_api": "Paylocity (API)",
+"personio": "Personio",
+"quickbooks": "Quickbooks",
+"rippling": "Rippling",
+"sage_hr": "Sage HR",
+"sapling": "Sapling",
+"sequoia_one": "Squoia One",
+"square_payroll": "Square Payroll",
+"trinet": "Trinet",
+"trinet_api": "Trinet (API)",
+"ulti_pro": "Ulti Pro",
+"wave": "Wave",
+"workday": "Workday",
+"zenefits": "Zenefits",
+"zenefits_api": "Zenefits (API)"
+}
+
+products = ["company", "directory", "individual", "employment"]

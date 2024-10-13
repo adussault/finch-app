@@ -1,0 +1,105 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<h3>Employment Information</h3>
+
+<table id="employment_info" class="table table-hover">
+		{% for response in data["responses"] %}
+		{% if response.code == 200 %}
+			<tr valign="center" id="{{ response.body.id[:10] }}" class="response.body" >
+				<td >
+					<div class='toggle-able' onclick="toggleDisplay('{{ response.body.id[:10] }}-details')" ><h5>{{ response.body.first_name }} {{ response.body.last_name }}</h5>
+					</div>
+				</td>
+			</tr>
+			<tr valign="top" id="{{ response.body.id[:10] }}-details" style="display: none;" class="response.body-details">
+				<td>
+					<table class="table">
+					{% for detail in response.body.keys() %}
+						<tr>
+							<th scope="row">{{ detail }}</th>
+						{% if detail == 'manager' %}
+							{% if response.body[detail].id == None %}
+							<td>None</td>
+							{% else %}
+								{% set manager = data["responses"] | selectattr("individual_id", "equalto", response.body[detail].id) | list %}
+								{% if manager != [] %}
+									<td>{{ manager[0].body.first_name }} {{ manager[0].body.last_name }}</td>
+								{% else %}
+									<td>Manager not found. Finch id is {{ response.body[detail].id }}</td>
+								{% endif %}
+							{% endif %}
+
+
+						{% elif detail == 'department' %}
+							<td>{{ response.body[detail].name }}</td>
+						{% elif response.body[detail].__class__.__name__ == 'dict' %}
+							<td>
+								<table class="table">
+									{% for k in response.body[detail].keys() %}
+									<tr>
+										<td>{{ k }}:</td>
+										<td>{{ response.body[detail][k] }}</td>
+									</tr>
+									{% endfor %}
+								</table>
+							</td>
+						{% elif response.body[detail].__class__.__name__ == 'list' %}
+							<td>
+								<span class="toggle-able" id='{{ response.body.id[:10] }}-{{ detail }}-show' onclick="toggleDisplay('{{ response.body.id[:10] }}-{{ detail }}-details')">
+									<em>Show / Hide</em>
+								</span>
+								<table id="{{ response.body.id[:10] }}-{{ detail }}-details" style="display: none;">
+									{% for item in response.body[detail] %}
+									<tr>
+										<td>------------</td>
+									</tr>
+										{% for k in item.keys() %}
+										<tr>
+											<td>{{ k }}:</td>
+											<td>{{ item[k] }}</td>
+										</tr>
+										{% endfor %}
+									{% endfor %}
+									<tr>
+										<td>------------</td>
+									</tr>
+								</table>
+							</td>
+						{% else %}
+								<td>{{ response.body[detail] }}</td>
+						{% endif %}
+						</tr>
+
+					{% endfor %}
+					<tr>
+						<td>
+							<a href="{{ url_for('employee_directory')}}#{{ response.body.id[:10] }}">Directory</a>
+						</td>
+					</tr>
+					</table>
+				</td>
+			</tr>
+
+		{% else %}
+		<tr>
+			<td>
+				Request Failed: {{ response.response.body_id }} - {{ response.code }} - {{ response.body }}
+			</td>
+		</tr>
+		{% endif %}
+
+		{% endfor %}
+	
+
+</table>
+
+
+
+<script type="text/javascript">
+	function toggleDisplay(elementID) {
+		var element = document.getElementById(elementID);
+		element.style.display = element.style.display === 'none' ? '' : 'none';
+}
+</script>
+{% endblock %}

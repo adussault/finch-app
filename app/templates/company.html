@@ -1,0 +1,136 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<h3>Company Details</h3>
+<table class="table">
+	<tr>
+		<td>Legal Name: </td>
+		<td>{{ data.legal_name }}</td>
+	</tr>
+	<tr>
+		<td>Entity Type: </td>
+		{% if data.entity.subtype == None %}
+		<td>{{ data.entity.type }}</td>
+		{% else %}
+		<td>{{ data.entity.type }} - {{ data.entity.subtype }}</td>
+		{% endif %}
+	</tr>	
+	<tr>
+		<td>EIN: </td>
+		<td>{{ data.ein }}</td>
+	</tr>
+	<tr>
+		<td>Primary Email: </td>
+		<td>{{ data.primary_email }}</td>
+	</tr>
+	<tr>
+		<td>Primary Phone Number: </td>
+		<td>{{ data.primary_phone_number }}</td>
+	</tr>
+	<tr>
+		<td>Legal Name: </td>
+		<td>{{ data.legal_name }}</td>
+	</tr>
+</table>
+<h4>Departments:</h4>
+	<table class="table">
+		{% if data.departments.__class__.__name__ == 'list' %}
+		{% for d in data.departments %}
+		<tr>
+			<td>
+				<strong>{{ d.name }}</strong>
+			</td>
+			<td>
+				{% if d.parent.name != None %}
+				<em>child of {{ d.parent.name }}</em>
+				{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+		{% else %}
+		<tr>
+			<td>{{ data.departments }}</td>
+		</tr>
+		{% endif %}
+
+	</table>
+<h4>Locations:</h4>
+	<table class="table">
+		{% if data.locations.__class__.__name__ == 'list' %}
+
+			{% for l in data.locations %}
+			<tr>
+				<td>
+					{{ l.line1 }}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					{% if l.line2 != None %}
+					{{ l.line2 }}
+					{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<td>{{ l.city }}, {{ l.state }} {{ l.postal_code }} {{ l.country }}</td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+			{% endfor %}
+		{% else %}
+		<tr>
+			<td>{{ data.locations }}</td>
+		</tr>
+		{% endif %}
+
+	</table>
+
+<h4>Accounts:</h4>
+	<table class="table">
+		{% if data.accounts.__class__.__name__ == 'list' %}
+			{% for a in data.accounts %}
+			<tr>
+				<td class="toggle-able" onclick="toggleDisplay('{{ a.institution_name }}-details')">
+					<strong>{{ a.institution_name }}</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<table class="table" id="{{ a.institution_name }}-details" style="display: none;">
+						<tr>
+							<td>Account Name:</td>
+							<td> {{a.account_name}}</td>
+						</tr>
+						<tr>
+							<td>Account Number:</td>
+							<td> {{a.account_number}}</td>
+						</tr>
+						<tr>
+							<td>Account Type:</td>
+							<td> {{a.account_type}}</td>
+						</tr>
+						<tr>
+							<td>Routing Number:</td>
+							<td> {{a.routing_number}}</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			{% endfor %}
+		{% else %}
+		<tr>
+			<td>{{ data.accounts }}</td>
+		</tr>
+		{% endif %}
+	</table>
+
+
+<script type="text/javascript">
+	function toggleDisplay(elementID) {
+		var element = document.getElementById(elementID);
+		element.style.display = element.style.display === 'none' ? '' : 'none';
+}
+</script>
+{% endblock %}

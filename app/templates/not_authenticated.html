@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>File Not Found</h1>
+	<p><a href="{{ url_for('index') }}">Go Home</a></p>
+	{% if error_message %}
+	<p>{{ error_message }}</p>
+	{% endif %}
+{% endblock %}

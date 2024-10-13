@@ -1,0 +1,11 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="container">
+	<h1>Error : {{ error_json.status }}</h1>
+	<p><strong>{{ error_json.name }}</strong></p>
+	<p>{{ error_json.message }}</p>
+
+	<p><a href="{{ url_for('index') }}">Go Home</a></p>
+</div>
+{% endblock %}

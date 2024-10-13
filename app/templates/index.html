@@ -1,0 +1,26 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<p>
+	{% if session['is_authenticated'] %}
+	<h3>Session Info</h3>
+	<table class="table">
+		<tr>
+			<th scope="row">Session Name</th>
+			<td>{{ session.name }}</td>
+		</tr>
+		<tr>
+			<th scope="row">Provider</th>
+			<td>{{ session.provider }}</td>
+		</tr>
+		<tr>
+			<th scope="row">Products</th>
+			<td>{{ session.products }}</td>
+		</tr>
+	</table>
+	{% else %}
+	<a href="{{ url_for('setup') }}">Get Started</a>
+	{% endif %}
+</p>
+{{ session.keys() }}
+{% endblock %}
