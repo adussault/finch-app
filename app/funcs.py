@@ -3,9 +3,10 @@ import os
 from finch import Finch
 import requests
 from flask import flash, render_template
-create_sandbox_url = "https://sandbox.tryfinch.com/api/sandbox/create"
+
 
 def create_sandbox_provider (provider_id, products, employee_size=10):
+	create_sandbox_url = "https://sandbox.tryfinch.com/api/sandbox/create"
 	valid_products = ["company", "directory", "individual", "employment"]
 	invalid_products = ["payment", "pay_statement"]
 

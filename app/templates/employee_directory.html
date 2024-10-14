@@ -7,13 +7,13 @@
 		{% for individual in data["individuals"] %}
 			<tr valign="center" id="{{ individual.id[:10] }}" class="individual" >
 				<td >
-					<div class='toggle-able' onclick="toggleDisplay('{{ individual.id[:10] }}-details')" >{{ individual.first_name }} {{ individual.last_name }}
+					<div class='toggle-able' onclick="toggleDisplay('{{ individual.id[:10] }}-details')" ><strong>{{ individual.first_name }} {{ individual.last_name }}</strong>
 					</div>
 				</td>
 			</tr>
 			<tr valign="top" id="{{ individual.id[:10] }}-details" style="display: none;" class="individual-details">
 				<td>
-					<table>
+					<table class="table">
 					{% for detail in individual.keys() %}
 						{% if detail == 'manager' %}
 						<tr>

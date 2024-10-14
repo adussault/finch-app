@@ -1,3 +1,4 @@
 app/.env
 misc_skrunk.txt
 .DS_Store
+__pycache__/

@@ -1,5 +1,4 @@
 from flask import render_template, request, flash, redirect, url_for, session
-
 from app import app
 from finch import Finch
 from .forms import CreateSandbox
@@ -7,10 +6,6 @@ from .app_data import providers, products
 from .funcs import create_sandbox_provider, get_sandbox_employee_directory, query_finch_sandbox_api, check_response_code
 
 import requests
-
-create_sandbox_url = "https://sandbox.tryfinch.com/api/sandbox/create"
-
-
 
 @app.route('/')
 @app.route('/index')
@@ -31,7 +26,6 @@ def setup():
 		
 
 		# Check response for errors
-
 		if (400 <= response.status_code  < 500):
 			flash("Call to Finch Sandbox failed with the error: \n" + str(response.status_code) + " - " + str(response.json()))
 			return render_template('400_errors.html', error=response.status_code, message=response.json())
@@ -46,37 +40,13 @@ def setup():
 			
 		print("Status: ")
 		print(response.status_code)
+
+		"""
+		# Used for development. Do not print access token to system logs in production.
 		print(response.json())
 		print("Access token: " + response.json().get('access_token'))
+		"""
 		# Load API data and token into storage
-		"""
-		example response headers
-			{'Age': '3', 
-			 'Cache-Control': 'no-cache', 
-			 'Cache-Status': '"Netlify Durable"; fwd=method, 
-			 "Netlify Edge"; fwd=miss', 
-			 'Content-Encoding': 'gzip', 
-			 'Content-Type': 'application/json; charset=utf-8', 
-			 'Date': 'Wed, 
-			 09 Oct 2024 07:02:37 GMT', 
-			 'Etag': '"2av8izridn6k-df"', 
-			 'Netlify-Vary': 'cookie=__next_preview_data:presence|__prerender_bypass:presence,query', 
-			 'Server': 'Netlify', 
-			 'Strict-Transport-Security': 'max-age=31536000', 
-			 'Vary': 'Accept-Encoding', 
-			 'X-Nf-Render-Mode': 'ssr', 
-			 'X-Nf-Request-Id': '01J9R1CARVVW19M02CSBQ96XST', 
-			 'Transfer-Encoding': 'chunked'}
-
-		example response json
-		{'payroll_provider_id': 'gusto',
-		 'company_id': '38249979-961e-4c91-be51-0198643169f1',
-		 'access_token': 'sandbox-token-27b03ba1-aed3-45e2-9b9b-e495f520347d',
-		 'sandbox_time': {'unix': 1728457357253,
-		  'calendar': 'Wed Oct 09 2024 07:02:37 GMT+0000'}}
-
-		"""
-
 		session['access_token'] = response.json().get('access_token')
 		session['company_id'] = response.json().get('company_id')
 		session['is_authenticated'] = True
@@ -227,10 +197,6 @@ def employment():
 		data = session["employment_data"]
 	else:
 		return render_template("not_authenticated.html", message="Please make sure you have set up your connection.")
-	
-
-
-
 
 
 @app.route('/end_session')
