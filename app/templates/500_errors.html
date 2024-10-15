@@ -2,9 +2,12 @@
 
 {% block content %}
 <div class="container">
-	<h1>Error : {{ error_json.status }}</h1>
-	<p><strong>{{ error_json.name }}</strong></p>
+	<h1>Error : <em>{{ error_json.status }} - {{ error_json.name }}</em></h1>
+	{% if error_json.name == "not_implemented_error" %}
+	<p>This product has not been implemented for this provider.</p>
+	{% else %}
 	<p>{{ error_json.message }}</p>
+	{% endif %}
 
 	<p><a href="{{ url_for('index') }}">Go Home</a></p>
 </div>
