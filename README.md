@@ -5,8 +5,8 @@ This is a simple demo app that creates a new Connection to the Finch Sandbox API
 
 ## Requirements:
 
-Runs on [Python 3.12](https://www.python.org/downloads/)
-You'll also need to install [Redis](https://redis.io/docs/latest/operate/oss_and_stack/install/)
+- Runs on [Python 3.12](https://www.python.org/downloads/)
+- You'll also need to install [Redis](https://redis.io/docs/latest/operate/oss_and_stack/install/) to handle session data.
 
 
 ## Python Dependencies
