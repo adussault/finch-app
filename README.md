@@ -31,4 +31,4 @@ Once you have your Flask and Redis server running:
 5. You can now explore the Employee Directory, Company Data, and Employment Information as you desire. In the directory and employment pages, you can click on employee names to view their details. 
 6. When you are done, click "End Session" and your session will be cleared. Feel free to create a new one!
 
-If you have any questions, please reach out to fake-support-email@example.com
+If you have any questions, please reach out to fake-support-email @ example.com
